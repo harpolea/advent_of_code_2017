@@ -4,7 +4,6 @@
 #include <sstream>
 #include <fstream>
 #include <iterator>
-#include <cmath>
 
 using namespace std;
 
