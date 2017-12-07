@@ -18,20 +18,19 @@ auto read_input(string in_string) {
 auto banks(string instring, bool part2) {
     vector<int> banks = read_input(instring); // vector holding banks
     map <vector <int>, int> previous_states; // dictionary to hold previous states and cycle number first seen
-    int ncycles = 0; // counter of number of cycles
 
     while (previous_states.find(banks) == previous_states.end()) { // iterate while current state not in dict
-        previous_states.insert(pair <vector <int>, int> (banks, ncycles)); // record current state
+        previous_states.insert(pair <vector <int>, int> (banks, previous_states.size())); // record current state
         auto max_el = max_element(banks.begin(), banks.end()); // find max element in banks
         int max_el_index = distance(banks.begin(), max_el); // its position
         int max_val = *max_el; // its value
         *max_el = 0; // set max bank to 0
+        
         for (int i = max_el_index+1; i < max_el_index+1+max_val; i++) {
             banks[i%banks.size()]++;
         }
-        ncycles++;
     }
-    return part2 ? ncycles - previous_states.find(banks)->second : ncycles; // if part 2 return current counter - cycle number saw banks originally, otherwise just number of cycles
+    return part2 ? previous_states.size() - previous_states.find(banks)->second : previous_states.size(); // if part 2 return current counter - cycle number saw banks originally, otherwise just number of cycles
 }
 
 int main() {
