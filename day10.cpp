@@ -32,7 +32,6 @@ auto sparse_hash(vector<int> lengths, int list_size, int nrounds) {
             skip++;
         }
     }
-
     return l;
 }
 
@@ -42,7 +41,7 @@ auto dense_hash(vector <int> l) {
 
     vector <int> dense_hash;
     dense_hash.reserve(16);
-
+    // do the bitwise xor of segments of length 16
     for (int j = 0; j < 16; j++) {
         int bitxor = l[j*16];
         for (int i = 1; i < 16; i++) {
@@ -56,14 +55,13 @@ auto dense_hash(vector <int> l) {
         stringstream sstream;
         sstream << hex << *it;
         if (sstream.str().size() < 2) {
-            hexstring += '0' + sstream.str();
+            hexstring += '0' + sstream.str(); // pad with leading 0
         } else {
             hexstring += sstream.str();
         }
     }
     return hexstring;
 }
-
 
 auto ascii(string s) {
     vector <int> codes;
@@ -72,7 +70,7 @@ auto ascii(string s) {
         codes.push_back( (int) *it);
     }
 
-    vector < int> extras = {17, 31, 73, 47, 23};
+    vector <int> extras = {17, 31, 73, 47, 23};
     copy(extras.begin(), extras.end(), back_inserter(codes));
     return codes;
 }
